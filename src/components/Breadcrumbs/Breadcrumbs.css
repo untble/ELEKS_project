@@ -1,0 +1,41 @@
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.breadcrumbs__item {
+    position: relative;
+    padding-right: 26px;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.breadcrumbs__item:not(:first-child) {
+    padding-left: 14px;
+}
+
+.chevrons-right {
+    transform: rotate(180deg);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

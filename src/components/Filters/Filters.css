@@ -1,0 +1,130 @@
+.filter {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter_container {
+    padding: 16px;
+}
+
+.filter__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.filter__header-title {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+}
+
+.filter__body {
+    flex-grow: 1;
+    margin-bottom: 28px;
+    width: 100%;
+    padding: 20px 48px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+}
+
+.filter__item {
+    width: 100%;
+    max-width: 378px;
+    padding-bottom: 42px;
+}
+
+.filter__item:not(:last-child) {
+    border-bottom: 1px solid #d6d6d6;
+}
+
+.filter__item:not(:first-child) {
+    padding-top: 34px;
+}
+
+.filter__item-title {
+    margin-bottom: 26px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.filter__item-group {
+    position: relative;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.filter__item-checkbox:not(:checked),
+.filter__item-radio:not(:checked),
+.filter__item-checkbox:checked,
+.filter__item-radio:checked {
+    position: absolute;
+    pointer-events: none;
+    margin-left: -20px;
+    padding: 0;
+    opacity: 0;
+}
+
+.filter__item-label {
+    position: relative;
+    display: inline-block;
+    padding-left: 34px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.filter__item-radio+.filter__item-label::before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 0;
+    width: 18px;
+    height: 16px;
+    border: 1px solid #999999;
+    border-radius: 50%;
+    transition: 0.2s;
+    z-index: 0;
+}
+
+.filter__item-checkbox+.filter__item-label::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 20px;
+    height: 18px;
+    border: 1px solid #999999;
+    border-radius: 3px;
+    transition: 0.2s;
+    z-index: 0;
+}
+
+.filter__item-radio:checked+.filter__item-label::before,
+.filter__item-checkbox:checked+.filter__item-label::before {
+    background-color: #6f64f8;
+    border-color: transparent;
+}
+
+.filter__item-count {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 32px;
+}
+
+.filter__clearButton {
+    height: 56px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+}

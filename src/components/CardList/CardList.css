@@ -1,0 +1,27 @@
+.product-list {
+    /* max-width: 1256px; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 -14px;
+}
+
+.product-wrapper {
+    flex: 0 0 33.33%;
+    height: 486px;
+    margin-top: 28px;
+    padding: 0 14px;
+}
+
+/* Media Query */
+@media screen and (max-width: 768px) {
+    .product-wrapper {
+        flex: 0 0 50%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .product-wrapper {
+        flex: 0 0 100%;
+    }
+}
