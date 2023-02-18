@@ -1,8 +1,8 @@
 export const ITEMS = 'ITEMS';
 export const FILTER_BY_CHECKBOX = 'FILTER_BY_CHECKBOX';
 
-let categories = [];
-let initialData;
+let fields = [];
+export let initialData;
 
 export const itemsReducer = (state = [], action) => {
     switch (action.type) {
@@ -13,26 +13,29 @@ export const itemsReducer = (state = [], action) => {
         case FILTER_BY_CHECKBOX: {
             const item = action.payload.item.toLowerCase().replace(' ', '_')
             if (action.payload.checked) {
-                categories = [...categories, item];
+                fields = [...fields, item];
             } else {
-                categories = categories.filter(category => category !== item);
+                fields = fields.filter(field => field !== item);
             }
 
-            if (!categories.length) {
+            if (!fields.length) {
                 return initialData;
             }
 
+            const hasCategory = action.payload.categories.filter(c => fields.includes(c.toLowerCase().replace(' ', '_')));
+            const hasBrand = action.payload.brands.filter(b => fields.includes(b.toLowerCase()));
+
             return initialData.filter(item => {
-                const tItem = action.payload.byBrand ? item.brand : item.category;
-                if (categories.includes(item.category) && categories.includes(item.brand)) {
-                    console.log('is called');
+                if (fields.includes(item.category) && fields.includes(item.brand)) {
                     return true;
-                } else if (categories.includes(tItem)) {
-                    return true;
+                } else if (fields.includes(item.brand) && !hasCategory.length) {
+                    return true
+                } else if (fields.includes(item.category) && !hasBrand.length) {
+                    return true
                 }
                 return false;
-            });
-            // return initialData.filter(item => categories.includes(item.category))
+            })
+
         }
         default:
             return state;

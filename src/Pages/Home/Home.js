@@ -7,12 +7,12 @@ import Pagination from "../../components/Pagination/Pagination";
 import './Home.css';
 import {Box, CssBaseline} from "@mui/material";
 
-function Home({ category, brands }) {
+function Home() {
     return (
         <Box paddingX="30px">
             <CssBaseline />
                 <Box display="flex">
-                    <Filters filters={{category, brands}}/>
+                    <Filters />
                     <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                         <Header />
                         <Breadcrumbs />

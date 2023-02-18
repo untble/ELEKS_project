@@ -7,7 +7,7 @@ const CardList = () => {
     console.log(items);
     return (
         <div className="product-list">
-            {items.map((item) => (
+            {items?.map((item) => (
                 <Card
                     key={item.id}
                     {...item}

@@ -1,5 +1,7 @@
-import styles from './Search.css'
+import './Search.css'
+import {useDispatch} from "react-redux";
 function Search() {
+
     return (
         <div className="search">
             <div className="search__results">
@@ -9,7 +11,12 @@ function Search() {
                 </button>
             </div>
             <form className="search__form">
-                <input type="text" name="search" placeholder="Search" class="search__form-input"/>
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search"
+                    className="search__form-input"
+                />
                     <button type="submit" className="search__form-button"><img src="images/icons/search.svg" alt="Search"/></button>
             </form>
         </div>

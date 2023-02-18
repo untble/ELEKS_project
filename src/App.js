@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import axios from "axios";
 import Home from './Pages/Home/Home';
 import {useDispatch} from "react-redux";
 import {ITEMS} from "./store/itemsReducer";
+import {CATEGORIES} from "./store/categoriesReducer";
+import {BRANDS} from "./store/brandsReducer";
 
 function App() {
   const dispatch = useDispatch();
-  const [category, setCategory] = useState([]);
-  const [brands, setBrands] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:3001/products').then(res => {
@@ -15,22 +15,18 @@ function App() {
     });
 
     axios.get('http://localhost:3001/categories').then(res => {
-      setCategory(res.data);
+      dispatch({type: CATEGORIES, payload: res.data});
     });
 
     axios.get('http://localhost:3001/brands').then(res => {
-      setBrands(res.data);
+      dispatch({type: BRANDS, payload: res.data});
     });
 
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">
-
-      <Home
-        category={category}
-        brands={brands}
-      />
+      <Home />
     </div>
   );
 }

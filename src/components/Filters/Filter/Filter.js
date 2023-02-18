@@ -1,29 +1,30 @@
 import {useDispatch, useSelector} from "react-redux";
-import {FILTER_BY_CHECKBOX} from "../../../store/itemsReducer";
+import {FILTER_BY_CHECKBOX, initialData} from "../../../store/itemsReducer";
 
-const Filter = ({ filter, title }) => {
+const Filter = ({ filter, title, field }) => {
     const dispatch = useDispatch();
-    const capitalizedTitle = title.charAt(0).toUpperCase() + title.slice(1);
-    const items = useSelector(state => state.items);
+    const categories = useSelector(state => state.categories);
+    const brands = useSelector(state => state.brands);
 
     const getCount = item => {
-        const field = title === 'brands' ? 'brand' : 'category'
-        return items.filter(i => i[`${field}`] === item.toLowerCase().replace(' ', '_')).length;
+        return initialData?.filter(i => i[`${field}`] === item.toLowerCase().replace(' ', '_')).length;
     }
 
     const handleFiltering = (event, item) => {
+        console.log('item', item)
         dispatch({
             type: FILTER_BY_CHECKBOX,
             payload: {
                 item,
                 checked: event.target.checked,
-                byBrand: title === 'brands'
+                categories,
+                brands
             }
         });
     }
     return (
         <div className="filter__item">
-            <h5 className="filter__item-title">{capitalizedTitle}</h5>
+            <h5 className="filter__item-title">{title}</h5>
             {filter.map((item) => (
                 <div className="filter__item-group">
                     <input type="checkbox"
