@@ -1,9 +1,11 @@
+import {Box} from "@mui/material";
+
 const Filter = ({ fields, title, handleFieldChange, selectedFields }) => {
     return (
         <div className="filter__item">
             <h5 className="filter__item-title">{title}</h5>
             {fields.map((field) => (
-                <div className="filter__item-group">
+                <Box className="filter__item-group">
                     <input type="checkbox"
                            className="filter__item-checkbox"
                            value={field}
@@ -13,9 +15,8 @@ const Filter = ({ fields, title, handleFieldChange, selectedFields }) => {
                            onChange={handleFieldChange}
                     />
                     <label className="filter__item-label" htmlFor={field}>{field}</label>
-                </div>
+                </Box>
             ))}
-
         </div>
     );
 }

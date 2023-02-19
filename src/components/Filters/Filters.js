@@ -6,6 +6,7 @@ import {makeStyles} from '@mui/styles';
 import {useState} from "react";
 import {KeyboardDoubleArrowRight} from "@mui/icons-material";
 import {Drawer, DrawerHeader} from "./Drawer/Drawer";
+import RangeFilter from "./RangeFilter/RangeFilter";
 
 const useStyles = makeStyles({
     arrowIcon: {
@@ -16,12 +17,14 @@ const useStyles = makeStyles({
 });
 
 function Filters({
-   brands,
-   categories,
-   handleBrandChange,
-   selectedBrands,
-   handleCategoryChange,
-   selectedCategories
+    brands,
+    categories,
+    handleBrandChange,
+    selectedBrands,
+    handleCategoryChange,
+    selectedCategories,
+    selectedPrice,
+    handleRangePrice
 }) {
     const styles = useStyles();
     const [open, setOpen] = useState(true);
@@ -52,6 +55,11 @@ function Filters({
                             </IconButton>
                         </Box>
                         <Box component="main" sx={{ flexGrow: 1, p: 3 }} className="filter__body">
+                            <RangeFilter
+                                title="Range slider"
+                                selectedPrice={selectedPrice}
+                                handleRangePrice={handleRangePrice}
+                            />
                             <Filter
                                 fields={categories}
                                 title="Category"

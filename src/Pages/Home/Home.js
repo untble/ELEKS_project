@@ -15,6 +15,7 @@ function Home() {
     const [categories, setCategories] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedPrice, setSelectedPrice] = useState([0, 100000]);
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleBrandChange = (e) => {
@@ -37,6 +38,8 @@ function Home() {
 
     const handleSearchChange = (e) => setSearchQuery(e.target.value);
 
+    const handleRangePrice = (e) => setSelectedPrice(e.target.value);
+
     const filteredProducts = products.filter((product) => {
         // Filter by selected brands and categories
         const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
@@ -47,13 +50,17 @@ function Home() {
             searchQuery === "" ||
             product.title.toLowerCase().includes(searchQuery.toLowerCase());
 
-        return brandMatch && categoryMatch && searchMatch;
+        // Filter by range price
+        const isInRange = product.price >= selectedPrice[0] && product.price <= selectedPrice[1];
+
+        return brandMatch && categoryMatch && searchMatch && isInRange;
     });
 
     useEffect(() => {
         axios.get('http://localhost:3001/products').then(res => {
             setProducts(res.data);
-        });
+        })
+
         axios.get('http://localhost:3001/categories').then(res => {
           setCategories(res.data);
         });
@@ -74,7 +81,8 @@ function Home() {
                         categories={categories}
                         selectedCategories={selectedCategories}
                         handleCategoryChange={handleCategoryChange}
-
+                        selectedPrice={selectedPrice}
+                        handleRangePrice={handleRangePrice}
                     />
                     <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                         <Header />
