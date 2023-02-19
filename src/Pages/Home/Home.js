@@ -9,13 +9,16 @@ import {Box, CssBaseline} from "@mui/material";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
+const minPrice = 0;
+const maxPrice = 100000
+
 function Home() {
     const [products, setProducts] = useState([]);
     const [brands, setBrands] = useState([]);
     const [categories, setCategories] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
-    const [selectedPrice, setSelectedPrice] = useState([0, 100000]);
+    const [selectedPrice, setSelectedPrice] = useState([minPrice, maxPrice]);
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleBrandChange = (e) => {
@@ -56,6 +59,13 @@ function Home() {
         return brandMatch && categoryMatch && searchMatch && isInRange;
     });
 
+    const clearFilters = () => {
+        setSelectedCategories([]);
+        setSelectedBrands([]);
+        setSearchQuery('');
+        setSelectedPrice([minPrice ,maxPrice])
+    }
+
     useEffect(() => {
         axios.get('http://localhost:3001/products').then(res => {
             setProducts(res.data);
@@ -83,6 +93,7 @@ function Home() {
                         handleCategoryChange={handleCategoryChange}
                         selectedPrice={selectedPrice}
                         handleRangePrice={handleRangePrice}
+                        clearFilters={clearFilters}
                     />
                     <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                         <Header />

@@ -1,7 +1,7 @@
 import Filter from './Filter/Filter';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import './Filters.css'
-import {Box, IconButton, Typography} from "@mui/material";
+import {Box, Button, IconButton, Typography} from "@mui/material";
 import {makeStyles} from '@mui/styles';
 import {useState} from "react";
 import {KeyboardDoubleArrowRight} from "@mui/icons-material";
@@ -24,7 +24,8 @@ function Filters({
     handleCategoryChange,
     selectedCategories,
     selectedPrice,
-    handleRangePrice
+    handleRangePrice,
+    clearFilters
 }) {
     const styles = useStyles();
     const [open, setOpen] = useState(true);
@@ -74,7 +75,13 @@ function Filters({
                             />
                         </Box>
                     </Box>
-                    <button className="button button_primary filter__clearButton">Clear all filters</button>
+                    <Button
+                        variant="contained"
+                        onClick={clearFilters}
+                        sx={{height: '56px', margin: '16px', background: '#6F64F8'}}
+                    >
+                        Clear all filters
+                    </Button>
                 </>
             )}
         </Drawer>
