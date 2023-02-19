@@ -6,7 +6,6 @@ import {makeStyles} from '@mui/styles';
 import {useState} from "react";
 import {KeyboardDoubleArrowRight} from "@mui/icons-material";
 import {Drawer, DrawerHeader} from "./Drawer/Drawer";
-import {useSelector} from "react-redux";
 
 const useStyles = makeStyles({
     arrowIcon: {
@@ -16,9 +15,14 @@ const useStyles = makeStyles({
     }
 });
 
-function Filters() {
-    const categories = useSelector(state => state.categories);
-    const brands = useSelector(state => state.brands);
+function Filters({
+   brands,
+   categories,
+   handleBrandChange,
+   selectedBrands,
+   handleCategoryChange,
+   selectedCategories
+}) {
     const styles = useStyles();
     const [open, setOpen] = useState(true);
 
@@ -48,13 +52,18 @@ function Filters() {
                             </IconButton>
                         </Box>
                         <Box component="main" sx={{ flexGrow: 1, p: 3 }} className="filter__body">
-                            <Filter filter={categories} title="Category" field="category"/>
-                            <Filter filter={brands} title="Brands" field="brand"/>
-                            {/*{*/}
-                            {/*    Object.keys(filters).map((item) => (*/}
-                            {/*        <Filter filter={filters[item]} title={item}/>*/}
-                            {/*    ))*/}
-                            {/*}*/}
+                            <Filter
+                                fields={categories}
+                                title="Category"
+                                handleFieldChange={handleCategoryChange}
+                                selectedFields={selectedCategories}
+                            />
+                            <Filter
+                                fields={brands}
+                                title="Brand"
+                                handleFieldChange={handleBrandChange}
+                                selectedFields={selectedBrands}
+                            />
                         </Box>
                     </Box>
                     <button className="button button_primary filter__clearButton">Clear all filters</button>

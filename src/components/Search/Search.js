@@ -1,11 +1,10 @@
 import './Search.css'
-import {useDispatch} from "react-redux";
-function Search() {
+function Search({value, onChange, filteredProducts}) {
 
     return (
         <div className="search">
             <div className="search__results">
-                <span className="search__results-text">7,618 results found</span>
+                <span className="search__results-text">{filteredProducts.length} results found</span>
                 <button className="button button_icon button_primary favorites">
                     <img src="images/icons/heart-white.svg" alt="Add favorites"/>
                 </button>
@@ -15,9 +14,11 @@ function Search() {
                     type="text"
                     name="search"
                     placeholder="Search"
+                    value={value}
+                    onChange={onChange}
                     className="search__form-input"
                 />
-                    <button type="submit" className="search__form-button"><img src="images/icons/search.svg" alt="Search"/></button>
+                <img className="search__form-image" src="images/icons/search.svg" alt="Search"/>
             </form>
         </div>
     );

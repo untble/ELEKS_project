@@ -1,38 +1,18 @@
-import {useDispatch, useSelector} from "react-redux";
-import {FILTER_BY_CHECKBOX, initialData} from "../../../store/itemsReducer";
-
-const Filter = ({ filter, title, field }) => {
-    const dispatch = useDispatch();
-    const categories = useSelector(state => state.categories);
-    const brands = useSelector(state => state.brands);
-
-    const getCount = item => {
-        return initialData?.filter(i => i[`${field}`] === item.toLowerCase().replace(' ', '_')).length;
-    }
-
-    const handleFiltering = (event, item) => {
-        console.log('item', item)
-        dispatch({
-            type: FILTER_BY_CHECKBOX,
-            payload: {
-                item,
-                checked: event.target.checked,
-                categories,
-                brands
-            }
-        });
-    }
+const Filter = ({ fields, title, handleFieldChange, selectedFields }) => {
     return (
         <div className="filter__item">
             <h5 className="filter__item-title">{title}</h5>
-            {filter.map((item) => (
+            {fields.map((field) => (
                 <div className="filter__item-group">
                     <input type="checkbox"
                            className="filter__item-checkbox"
-                           id={item}
-                           onClick={(event) => handleFiltering(event, item)} />
-                    <label className="filter__item-label" htmlFor={item}>{item}</label>
-                    <span className="filter__item-count">{getCount(item)}</span>
+                           value={field}
+                           name={field.toLowerCase().replace(' ', '_')}
+                           id={field}
+                           checked={selectedFields.includes(field.toLowerCase().replace(' ', '_'))}
+                           onChange={handleFieldChange}
+                    />
+                    <label className="filter__item-label" htmlFor={field}>{field}</label>
                 </div>
             ))}
 

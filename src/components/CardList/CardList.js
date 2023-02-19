@@ -1,16 +1,13 @@
 import Card from './Card/Card';
 import './CardList.css'
-import {useSelector} from "react-redux";
 
-const CardList = () => {
-    const items = useSelector(state => state.items);
-    console.log(items);
+const CardList = ({filteredProducts}) => {
     return (
         <div className="product-list">
-            {items?.map((item) => (
+            {filteredProducts?.map((product) => (
                 <Card
-                    key={item.id}
-                    {...item}
+                    key={product.id}
+                    {...product}
                 />))}
         </div>
     )
