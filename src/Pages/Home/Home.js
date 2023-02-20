@@ -76,6 +76,15 @@ function Home() {
         setCurrentPage(value);
     };
 
+    const handleWishlist = (item) => {
+        setProducts(products.map(product => {
+            if (item.id === product.id) {
+                return { ...product, liked: !product.liked }
+            }
+            return product;
+        }))
+    }
+
     const indexOfLastProduct = currentPage * PER_PAGE;
     const indexOfFirstProduct = indexOfLastProduct - PER_PAGE;
     const currentProductsPerPage = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
@@ -125,8 +134,12 @@ function Home() {
                         value={searchQuery}
                         onChange={handleSearchChange}
                         filteredProducts={filteredProducts}
+                        handleWishlist={handleWishlist}
                     />
-                    <CardList filteredProducts={currentProductsPerPage}/>
+                    <CardList
+                        filteredProducts={currentProductsPerPage}
+                        handleWishlist={handleWishlist}
+                    />
                 </Box>
             </Box>
             <Pagination

@@ -7,9 +7,8 @@ const Filter = ({
    selectedFields,
    filteredProducts,
    isAllowedToShowCount,
-    products
+   products
 }) => {
-    console.log('isAllowedToShowCount', isAllowedToShowCount);
     const refactoredField = (field) => field.toLowerCase().replace(' ', '_');
     const numberOfFoundMatches = (items, field) =>
         items.filter(i => i[title.toLowerCase()] === refactoredField(field)).length;
@@ -18,7 +17,7 @@ const Filter = ({
         <div className="filter__item">
             <h5 className="filter__item-title">{title}</h5>
             {fields.map((field) => (
-                <Box className="filter__item-group">
+                <Box className="filter__item-group" key={field}>
                     <input type="checkbox"
                            className="filter__item-checkbox"
                            value={field}

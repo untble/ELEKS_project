@@ -1,6 +1,7 @@
 import './Card.css';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import {makeStyles} from "@mui/styles";
 import {Button} from "@mui/material";
@@ -15,10 +16,14 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center'
     },
-    wishlistBtn: {
+    wishlistBtnDefault: {
         background: '#EDEDED',
         color: 'black',
         fontWeight: 'bold',
+    },
+    wishlistBtnLiked: {
+        background: "#081625",
+        color: "#6F64F8"
     },
     addToCartBtn: {
         background: '#6F64F8',
@@ -35,7 +40,8 @@ const useStyles = makeStyles({
     }
 });
 
-function Card({title, price, images, rating, brand, category}) {
+function Card(product) {
+    const {title, price, images, rating, brand, category, liked, handleWishlist} = product;
     const styles = useStyles();
     return (
         <div className="product-wrapper">
@@ -60,8 +66,11 @@ function Card({title, price, images, rating, brand, category}) {
                 </span>
                 </div>
                 <div className="product__buttons">
-                    <Button className={`${styles.wishlistBtn} ${styles.button}`}>
-                        <FavoriteBorderIcon className={styles.icon} />
+                    <Button
+                        className={`${liked ? styles.wishlistBtnLiked : styles.wishlistBtnDefault} ${styles.button}`}
+                        onClick={() => handleWishlist(product)}
+                    >
+                        {liked ? <FavoriteIcon className={styles.icon} /> : <FavoriteBorderIcon className={styles.icon} /> }
                         <span className="wishlist">Wishlist</span>
                     </Button>
                     <Button className={`${styles.addToCartBtn} ${styles.button}`}>

@@ -76,8 +76,7 @@
 
 .product__buttons {
     display: flex;
-    flex-grow: 1;
-    max-height: 45px;
+    height: 45px;
 }
 
 .product__buttons .button {
