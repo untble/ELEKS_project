@@ -12,6 +12,7 @@ import axios from "axios";
 const minPrice = 0;
 const maxPrice = 100000
 const PER_PAGE = 9;
+const priceRange = [minPrice, maxPrice];
 
 function Home() {
     const [products, setProducts] = useState([]);
@@ -19,11 +20,13 @@ function Home() {
     const [categories, setCategories] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
-    const [selectedPrice, setSelectedPrice] = useState([minPrice, maxPrice]);
+    const [selectedPrice, setSelectedPrice] = useState(priceRange);
     const [searchQuery, setSearchQuery] = useState("");
 
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+
+    const hasPriceRangeChanged = selectedPrice.every((p, i) => p === priceRange[i]);
 
     const handleBrandChange = (e) => {
         const brand = e.target.name;
@@ -44,7 +47,6 @@ function Home() {
     };
 
     const handleSearchChange = (e) => setSearchQuery(e.target.value);
-
     const handleRangePrice = (e) => setSelectedPrice(e.target.value);
 
     const filteredProducts = products.filter((product) => {
@@ -74,9 +76,9 @@ function Home() {
         setCurrentPage(value);
     };
 
-    const indexOfLastItem = currentPage * PER_PAGE;
-    const indexOfFirstItem = indexOfLastItem - PER_PAGE;
-    const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
+    const indexOfLastProduct = currentPage * PER_PAGE;
+    const indexOfFirstProduct = indexOfLastProduct - PER_PAGE;
+    const currentProductsPerPage = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
     useEffect(() => {
         axios.get('http://localhost:3001/products').then(res => {
@@ -112,6 +114,9 @@ function Home() {
                     selectedPrice={selectedPrice}
                     handleRangePrice={handleRangePrice}
                     clearFilters={clearFilters}
+                    filteredProducts={filteredProducts}
+                    products={products}
+                    haveFiltersBeenUsed={hasPriceRangeChanged && !searchQuery}
                 />
                 <Box component="main" sx={{flexGrow: 1, p: 3}}>
                     <Header/>
@@ -121,11 +126,11 @@ function Home() {
                         onChange={handleSearchChange}
                         filteredProducts={filteredProducts}
                     />
-                    <CardList filteredProducts={currentItems}/>
+                    <CardList filteredProducts={currentProductsPerPage}/>
                 </Box>
             </Box>
             <Pagination
-                products={currentItems}
+                products={currentProductsPerPage}
                 pageCount={pageCount}
                 currentPage={currentPage}
                 handlePageChange={handlePageChange}

@@ -25,7 +25,10 @@ function Filters({
     selectedCategories,
     selectedPrice,
     handleRangePrice,
-    clearFilters
+    clearFilters,
+    filteredProducts,
+    products,
+    haveFiltersBeenUsed
 }) {
     const styles = useStyles();
     const [open, setOpen] = useState(true);
@@ -63,15 +66,21 @@ function Filters({
                             />
                             <Filter
                                 fields={categories}
+                                filteredProducts={filteredProducts}
                                 title="Category"
                                 handleFieldChange={handleCategoryChange}
                                 selectedFields={selectedCategories}
+                                products={products}
+                                isAllowedToShowCount={selectedBrands.length || !haveFiltersBeenUsed}
                             />
                             <Filter
                                 fields={brands}
+                                filteredProducts={filteredProducts}
                                 title="Brand"
                                 handleFieldChange={handleBrandChange}
                                 selectedFields={selectedBrands}
+                                products={products}
+                                isAllowedToShowCount={selectedCategories.length || !haveFiltersBeenUsed}
                             />
                         </Box>
                     </Box>
