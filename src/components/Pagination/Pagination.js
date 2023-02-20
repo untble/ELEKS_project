@@ -1,30 +1,14 @@
 import './Pagination.css'
-function Pagination() {
+import {Box, Stack} from "@mui/material";
+import {Pagination as MuiPagination} from "@mui/material";
+
+const Pagination = ({products, currentPage, pageCount, handlePageChange}) => {
     return (
-        <div className="pagination">
-            <div className="pagination__previous">
-                <a className="pagination__item-link" href="/previous">
-                    <img src="images/icons/chevron-left.svg" alt="Previous"/>
-                </a>
-            </div>
-            <div className="pagination__items">
-                <a className="pagination__item-link" href="/page/1">1</a>
-                <a className="pagination__item-link" href="/page/2">2</a>
-                <a className="pagination__item-link" href="/page/3">3</a>
-                <a className="pagination__item-link" href="/page/4">4</a>
-                <a className="pagination__item-link" href="/page/5">5</a>
-                <span className="pagination__item-current">6</span>
-                <a className="pagination__item-link" href="/page/7">7</a>
-                <a className="pagination__item-link" href="/page/8">8</a>
-                <a className="pagination__item-link" href="/page/9">9</a>
-                <a className="pagination__item-link" href="/page/10">10</a>
-            </div>
-            <div className="pagination__next">
-                <a className="pagination__item-link" href="/next">
-                    <img src="images/icons/chevron-right.svg" alt="Next"/>
-                </a>
-            </div>
-        </div>
+        (products.length && <Box sx={{display: 'flex', justifyContent: 'center', margin: '20px 0'}}>
+            <Stack spacing={2}>
+                <MuiPagination count={pageCount} page={currentPage} color="primary" onChange={handlePageChange}/>
+            </Stack>
+        </Box>)
     );
 }
 

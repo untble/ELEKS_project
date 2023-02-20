@@ -11,6 +11,7 @@ import axios from "axios";
 
 const minPrice = 0;
 const maxPrice = 100000
+const PER_PAGE = 9;
 
 function Home() {
     const [products, setProducts] = useState([]);
@@ -20,6 +21,9 @@ function Home() {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedPrice, setSelectedPrice] = useState([minPrice, maxPrice]);
     const [searchQuery, setSearchQuery] = useState("");
+
+    const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const handleBrandChange = (e) => {
         const brand = e.target.name;
@@ -63,8 +67,16 @@ function Home() {
         setSelectedCategories([]);
         setSelectedBrands([]);
         setSearchQuery('');
-        setSelectedPrice([minPrice ,maxPrice])
+        setSelectedPrice([minPrice, maxPrice])
     }
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+
+    const indexOfLastItem = currentPage * PER_PAGE;
+    const indexOfFirstItem = indexOfLastItem - PER_PAGE;
+    const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
 
     useEffect(() => {
         axios.get('http://localhost:3001/products').then(res => {
@@ -72,41 +84,52 @@ function Home() {
         })
 
         axios.get('http://localhost:3001/categories').then(res => {
-          setCategories(res.data);
+            setCategories(res.data);
         });
 
         axios.get('http://localhost:3001/brands').then(res => {
-          setBrands(res.data);
+            setBrands(res.data);
         });
+
     }, []);
+
+    useEffect(() => {
+        setPageCount(Math.ceil(filteredProducts.length / PER_PAGE));
+        setCurrentPage(1);
+    }, [filteredProducts.length])
 
     return (
         <Box paddingX="30px">
-            <CssBaseline />
-                <Box display="flex">
-                    <Filters
-                        brands={brands}
-                        selectedBrands={selectedBrands}
-                        handleBrandChange={handleBrandChange}
-                        categories={categories}
-                        selectedCategories={selectedCategories}
-                        handleCategoryChange={handleCategoryChange}
-                        selectedPrice={selectedPrice}
-                        handleRangePrice={handleRangePrice}
-                        clearFilters={clearFilters}
+            <CssBaseline/>
+            <Box display="flex">
+                <Filters
+                    brands={brands}
+                    selectedBrands={selectedBrands}
+                    handleBrandChange={handleBrandChange}
+                    categories={categories}
+                    selectedCategories={selectedCategories}
+                    handleCategoryChange={handleCategoryChange}
+                    selectedPrice={selectedPrice}
+                    handleRangePrice={handleRangePrice}
+                    clearFilters={clearFilters}
+                />
+                <Box component="main" sx={{flexGrow: 1, p: 3}}>
+                    <Header/>
+                    <Breadcrumbs/>
+                    <Search
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        filteredProducts={filteredProducts}
                     />
-                    <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                        <Header />
-                        <Breadcrumbs />
-                        <Search
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                            filteredProducts={filteredProducts}
-                        />
-                        <CardList filteredProducts={filteredProducts} />
-                    </Box>
+                    <CardList filteredProducts={currentItems}/>
                 </Box>
-                {/*<Pagination />*/}
+            </Box>
+            <Pagination
+                products={currentItems}
+                pageCount={pageCount}
+                currentPage={currentPage}
+                handlePageChange={handlePageChange}
+            />
         </Box>
     );
 }

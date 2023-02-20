@@ -1,6 +1,5 @@
 import './Search.css'
-import {Button, Stack} from "@mui/material";
-import Pagination from '@mui/material/Pagination';
+import {Button} from "@mui/material";
 function Search({value, onChange, filteredProducts}) {
 
     return (
@@ -15,12 +14,6 @@ function Search({value, onChange, filteredProducts}) {
                     <img src="images/icons/heart-white.svg" alt="Add favorites"/>
                 </Button>
             </div>
-            <Stack spacing={2}>
-                <Pagination count={10} />
-                <Pagination count={10} color="primary" />
-                <Pagination count={10} color="secondary" />
-                <Pagination count={10} disabled />
-            </Stack>
             <form className="search__form">
                 <input
                     type="text"
